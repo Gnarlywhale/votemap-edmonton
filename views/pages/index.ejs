@@ -9,8 +9,8 @@
   <!-- <%- include ("../partials/nav.ejs") %> -->
   <button class="tablink" onclick="openPage('Mixed')" id="defaultOpen">Mixed</button>
   <button class="tablink" onclick="openPage('NDP')" >NDP</button>
-  <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
-  <button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
+  <button class="tablink" onclick="openPage('Con')">Conservative</button>
+  <button class="tablink" onclick="openPage('Lib')">Liberal</button>
   <div id="mixedId"></div>
 
 </body>
@@ -78,7 +78,7 @@ info.update = function (props) {
 info.addTo(mixedMap);
 
 
-
+// Should improve to pre-load each json file, then just add to map on click, rather than loading each time.
 function openPage(mapType) {
   mixedMap.eachLayer(function(layer) {
   if (!!layer.toGeoJSON) {
@@ -95,6 +95,20 @@ geojson.addTo(mixedMap);
       break;
     case "NDP":
     geojson = L.geoJson.ajax('FullBendNDP.json', {style: style, local: true, onEachFeature: onEachFeature});
+// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+geojson.on('data:loaded', function(){
+geojson.addTo(mixedMap);
+});
+      break;
+      case "Con":
+    geojson = L.geoJson.ajax('FullBendCon.json', {style: style, local: true, onEachFeature: onEachFeature});
+// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+geojson.on('data:loaded', function(){
+geojson.addTo(mixedMap);
+});
+      break;
+      case "Lib":
+    geojson = L.geoJson.ajax('FullBendLib.json', {style: style, local: true, onEachFeature: onEachFeature});
 // geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
 geojson.on('data:loaded', function(){
 geojson.addTo(mixedMap);
