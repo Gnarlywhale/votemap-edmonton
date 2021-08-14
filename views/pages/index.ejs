@@ -76,7 +76,20 @@ info.update = function (props) {
 };
 
 info.addTo(mixedMap);
+mixed = L.geoJson.ajax('FullBend.json', {style: style, local: true, onEachFeature: onEachFeature});
+// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+mixed.on('data:loaded', function(){
+  mixed.addTo(mixedMap);
+});
 
+ndp =  L.geoJson.ajax('FullBendNDP.json', {style: style, local: true, onEachFeature: onEachFeature});
+// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+
+con = L.geoJson.ajax('FullBendCon.json', {style: style, local: true, onEachFeature: onEachFeature});
+// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+
+lib = L.geoJson.ajax('FullBendLib.json', {style: style, local: true, onEachFeature: onEachFeature});
+// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
 
 // Should improve to pre-load each json file, then just add to map on click, rather than loading each time.
 function openPage(mapType) {
@@ -87,32 +100,16 @@ function openPage(mapType) {
 });
   switch(mapType){
     case "Mixed":
-    geojson = L.geoJson.ajax('FullBend.json', {style: style, local: true, onEachFeature: onEachFeature});
-// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
-geojson.on('data:loaded', function(){
-geojson.addTo(mixedMap);
-});
+    mixed.addTo(mixedMap);
       break;
     case "NDP":
-    geojson = L.geoJson.ajax('FullBendNDP.json', {style: style, local: true, onEachFeature: onEachFeature});
-// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
-geojson.on('data:loaded', function(){
-geojson.addTo(mixedMap);
-});
+    ndp.addTo(mixedMap);
       break;
       case "Con":
-    geojson = L.geoJson.ajax('FullBendCon.json', {style: style, local: true, onEachFeature: onEachFeature});
-// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
-geojson.on('data:loaded', function(){
-geojson.addTo(mixedMap);
-});
+    con.addTo(mixedMap);
       break;
       case "Lib":
-    geojson = L.geoJson.ajax('FullBendLib.json', {style: style, local: true, onEachFeature: onEachFeature});
-// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
-geojson.on('data:loaded', function(){
-geojson.addTo(mixedMap);
-});
+    lib.addto(mixedMap);
       break;
   }
   // var i, tabcontent, tablinks;
