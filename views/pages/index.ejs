@@ -49,13 +49,14 @@ function highlightFeature(e) {
 function resetHighlight(e) {
     geojson.resetStyle(e.target);
 }
+var geojson = L.geoJson.ajax('FullBendNDP', {style: style, local: true});
 geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
 geojson.on('data:loaded', function(){
 geojson.addTo(mymap);
-geojson.eachLayer(function (layer){
-  layer.setStyle(style(layer))
-  layer.bindPopup(feature.properties.description)
-})
+// geojson.eachLayer(function (layer){
+//   layer.setStyle(style(layer))
+//   layer.bindPopup(feature.properties.description)
+// })
 // geojson.onEachFeature(function (feature, layer){
 //   layer.setStyle(style(layer))
 //   feature.set
