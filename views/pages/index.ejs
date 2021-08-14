@@ -44,8 +44,7 @@ function highlightFeature(e) {
     layer.setStyle({
         weight: 5,
         color: '#666',
-        dashArray: '',
-        fillOpacity: 0.7
+        dashArray: ''
     });
     info.update(layer.feature.properties)
 
@@ -68,8 +67,8 @@ info.onAdd = function (mymap) {
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>Riverbend Voting Results</h4>' +  (props ?
-        '<b>' + props.pdnum + '</b><br /> Lib: ' + props.lVotes + '<br />Con: ' + props.cVotes +'<br />NDP: ' + props.nVotes
-        : 'Hover over a state');
+        '<b>Poll Number: ' + props.pdnum + '</b><br /> Lib: ' + props.lVotes + '<br />Con: ' + props.cVotes +'<br />NDP: ' + props.nVotes
+        : 'Hover over a neighbourhood');
 };
 
 info.addTo(mymap);
