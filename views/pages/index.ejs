@@ -10,13 +10,17 @@
   <button class="tablink" onclick="openPage('Mixed', this, 'gray')" id="defaultOpen">Mixed</button>
   <button class="tablink" onclick="openPage('NDP', this, 'orange')" >NDP</button>
   <button class="tablink" onclick="openPage('Conservative', this, 'blue')">Conservative</button>
-  <button class="tablink" onclick="openPage('Red', this, 'orange')">Red</button>
+  <button class="tablink" onclick="openPage('Liberal', this, 'orange')">Liberal</button>
   <div id="Mixed" class="tabcontent">
-  <div id="mapid"></div>
+  <div id="mixedId"></div>
+</div>
+<div id="NDP" class="tabcontent">
+  <div id="ndpId"></div>
 </div>
 </body>
 <script>
-var mymap = L.map('mapid').setView([53.5461, -113.4938], 12);
+var mixedMap = L.map('mixedId').setView([53.5461, -113.4938], 12);
+var ndpMap = L.map('ndpId').setView([53.5461, -113.4938], 12);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -24,7 +28,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     tileSize: 512,
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiZ25hcmx5d2hhbGUiLCJhIjoiY2tzYmI0Mjd2MDUyaDJvcGF3MmtrZ2swYyJ9.WIUqsJEFYMnbTUv2MiUPdg'
-}).addTo(mymap);
+}).addTo([mixedMap, ndpMap]);
 var geojson; 
 function style(feature) {
     return {
@@ -62,7 +66,7 @@ function resetHighlight(e) {
 }
 var info = L.control();
 
-info.onAdd = function (mymap) {
+info.onAdd = function (mixedMap) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
     this.update();
     return this._div;
@@ -75,12 +79,12 @@ info.update = function (props) {
         : 'Hover over a neighbourhood');
 };
 
-info.addTo(mymap);
+info.addTo(mixedMap);
 
 geojson = L.geoJson.ajax('FullBend.json', {style: style, local: true, onEachFeature: onEachFeature});
 // geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
 geojson.on('data:loaded', function(){
-geojson.addTo(mymap);
+geojson.addTo(mixedMap);
 });
 
 function openPage(pageName,elmnt,color) {
