@@ -40,7 +40,11 @@ margin: 0 0 5px;
 color: #777;
 }
 
-
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
 
 .tablink {
   background-color: #555;
@@ -49,6 +53,7 @@ color: #777;
   border: none;
   outline: none;
   cursor: pointer;
+  padding: 14px 16px;
   font-size: 17px;
   width: 25%;
 }
@@ -61,6 +66,7 @@ color: #777;
 .tabcontent {
   color: white;
   display: none;
+  padding: 100px 20px;
   height: 100%;
 }
 
