@@ -25,8 +25,9 @@ border: 2px solid white; }
 .jumbotron .lang-logo img {
 max-width: 100%; }
 
-#mixedId { height: 800px}
-#ndpId { height: 800px}
+#mixedId { height: 800px;
+width:100vw}
+
 
 .info {
 padding: 6px 8px;
