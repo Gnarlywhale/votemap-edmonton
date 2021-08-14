@@ -23,6 +23,9 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(mymap);
 
 
-L.GeoJSON.AJAX('FullBendNDP.json').addTo(mymap);
+var geojson = new L.GeoJSON.AJAX('FullBendNDP.json');
+geojson.on('data:loaded', function(){
+geojson.addTo(mymap);
+});
 </script>
 </html>
