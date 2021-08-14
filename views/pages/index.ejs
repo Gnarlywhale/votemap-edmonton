@@ -6,21 +6,33 @@
 
 <body>
 
-  <%- include ("../partials/nav.ejs") %>
+  <!-- <%- include ("../partials/nav.ejs") %> -->
 
   <div id="mapid"></div>
 
 </body>
 <script>
-var mymap = L.map('mapid').setView([53.5461, -113.4938], 12);
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+var mymap = L.map('mapid',{
+  center:[53.5461, -113.4938],
+  zoom: 12,
+  layers: [mixed, ndp]
+});
+var mixed = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     id: 'mapbox/streets-v11',
     tileSize: 512,
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiZ25hcmx5d2hhbGUiLCJhIjoiY2tzYmI0Mjd2MDUyaDJvcGF3MmtrZ2swYyJ9.WIUqsJEFYMnbTUv2MiUPdg'
-}).addTo(mymap);
+});
+var ndp = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoiZ25hcmx5d2hhbGUiLCJhIjoiY2tzYmI0Mjd2MDUyaDJvcGF3MmtrZ2swYyJ9.WIUqsJEFYMnbTUv2MiUPdg'
+});
 var geojson; 
 function style(feature) {
     return {
@@ -73,10 +85,33 @@ info.update = function (props) {
 
 info.addTo(mymap);
 
-geojson = L.geoJson.ajax('FullBendNDP.json', {style: style, local: true, onEachFeature: onEachFeature});
+loadNDP = L.geoJson.ajax('FullBendNDP.json', {style: style, local: true, onEachFeature: onEachFeature});
 // geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
-geojson.on('data:loaded', function(){
-geojson.addTo(mymap);
+ndp.on('data:loaded', function(){
+  // ndp.addTo(mymap);
+  mixed = L.geoJson.ajax('FullBend.json', {style: style, local: true, onEachFeature: onEachFeature});
+// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+mixed.on('data:loaded', function(){
+  // mixed.addTo(mymap);
+  var baseMaps = {
+  "All Parties": mixed,
+  "NDP": ndp
+};
+
+L.control.layers(baseMaps).addTo(mymap);
 });
+});
+
+// mixed = L.geoJson.ajax('FullBend.json', {style: style, local: true, onEachFeature: onEachFeature});
+// // geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+// mixed.on('data:loaded', function(){
+//   // mixed.addTo(mymap);
+//   var baseMaps = {
+//   "All Parties": mixed,
+//   "NDP": ndp
+// };
+
+// L.control.layers(baseMaps).addTo(mymap);
+// });
 </script>
 </html>
