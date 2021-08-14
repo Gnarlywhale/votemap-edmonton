@@ -7,9 +7,13 @@
 <body>
 
   <!-- <%- include ("../partials/nav.ejs") %> -->
-
+  <button class="tablink" onclick="openPage('Mixed', this, 'gray')" id="defaultOpen">Mixed</button>
+  <button class="tablink" onclick="openPage('NDP', this, 'orange')" >NDP</button>
+  <button class="tablink" onclick="openPage('Conservative', this, 'blue')">Conservative</button>
+  <button class="tablink" onclick="openPage('Red', this, 'orange')">Red</button>
+  <div id="Mixed" class="tabcontent">
   <div id="mapid"></div>
-
+</div>
 </body>
 <script>
 var mymap = L.map('mapid').setView([53.5461, -113.4938], 12);
@@ -79,5 +83,21 @@ geojson.on('data:loaded', function(){
 geojson.addTo(mymap);
 });
 
+function openPage(pageName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(pageName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
 </script>
 </html>
