@@ -80,7 +80,7 @@ info.addTo(mixedMap);
 
 
 function openPage(mapType) {
-  mixedMap.clearLayers();
+  L.geoJSON().clearLayers();
   switch(mapType){
     case "Mixed":
     geojson = L.geoJson.ajax('FullBend.json', {style: style, local: true, onEachFeature: onEachFeature});
