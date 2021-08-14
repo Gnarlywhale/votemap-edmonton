@@ -25,7 +25,7 @@ border: 2px solid white; }
 .jumbotron .lang-logo img {
 max-width: 100%; }
 
-#mapid { height: 800px; }
+#mapid { height: 800px; width:1000px; }
 
 .info {
 padding: 6px 8px;
@@ -64,7 +64,6 @@ body, html {
 
 /* Style the tab content (and add height:100% for full page content) */
 .tabcontent {
-  color: white;
   display: none;
   padding: 100px 20px;
   height: 100%;
