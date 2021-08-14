@@ -55,8 +55,8 @@ function highlightFeature(e) {
 function resetHighlight(e) {
     geojson.resetStyle(e.target);
 }
-var geojson = L.geoJson.ajax('FullBendNDP', {style: style, local: true, onEachFeature: onEachFeature});
-geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+geojson = L.geoJson.ajax('FullBendNDP.json', {style: style, local: true, onEachFeature: onEachFeature});
+// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
 geojson.on('data:loaded', function(){
 geojson.addTo(mymap);
 });
