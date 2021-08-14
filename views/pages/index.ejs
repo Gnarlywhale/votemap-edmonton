@@ -59,7 +59,7 @@ function resetHighlight(e) {
 }
 var info = L.control();
 
-info.onAdd = function (map) {
+info.onAdd = function (mymap) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
     this.update();
     return this._div;
@@ -72,7 +72,7 @@ info.update = function (props) {
         : 'Hover over a state');
 };
 
-info.addTo(map);
+info.addTo(mymap);
 
 geojson = L.geoJson.ajax('FullBendNDP.json', {style: style, local: true, onEachFeature: onEachFeature});
 // geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
