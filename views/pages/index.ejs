@@ -32,6 +32,13 @@ function style(feature) {
         fillOpacity: feature.properties.fill_opacity
     };
 }
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+    });
+}
 function highlightFeature(e) {
     var layer = e.target;
 
@@ -49,18 +56,10 @@ function highlightFeature(e) {
 function resetHighlight(e) {
     geojson.resetStyle(e.target);
 }
-var geojson = L.geoJson.ajax('FullBendNDP', {style: style, local: true});
+var geojson = L.geoJson.ajax('FullBendNDP', {style: style, local: true, onEachFeature: onEachFeature});
 geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
 geojson.on('data:loaded', function(){
 geojson.addTo(mymap);
-// geojson.eachLayer(function (layer){
-//   layer.setStyle(style(layer))
-//   layer.bindPopup(feature.properties.description)
-// })
-// geojson.onEachFeature(function (feature, layer){
-//   layer.setStyle(style(layer))
-//   feature.set
-// })
 });
 </script>
 </html>
