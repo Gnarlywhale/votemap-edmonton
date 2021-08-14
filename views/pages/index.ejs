@@ -21,7 +21,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiZ25hcmx5d2hhbGUiLCJhIjoiY2tzYmI0Mjd2MDUyaDJvcGF3MmtrZ2swYyJ9.WIUqsJEFYMnbTUv2MiUPdg'
 }).addTo(mymap);
-
+var geojson 
 function style(feature) {
     return {
         fillColor: feature.properties.fill,
@@ -32,13 +32,34 @@ function style(feature) {
         fillOpacity: feature.properties.fill_opacity
     };
 }
+function highlightFeature(e) {
+    var layer = e.target;
 
-var geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+}
+function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+}
+geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
 geojson.on('data:loaded', function(){
 geojson.addTo(mymap);
 geojson.eachLayer(function (layer){
   layer.setStyle(style(layer))
+  layer.bindPopup(feature.properties.description)
 })
+// geojson.onEachFeature(function (feature, layer){
+//   layer.setStyle(style(layer))
+//   feature.set
+// })
 });
 </script>
 </html>
