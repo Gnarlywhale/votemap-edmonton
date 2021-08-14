@@ -38,18 +38,18 @@ function style(feature) {
 }
 function onEachFeature(feature, layer) {
     layer.on({
-        // mouseover: highlightFeature,
+         mouseover: highlightFeature,
         // mouseout: resetHighlight
     });
 }
 function highlightFeature(e) {
     var layer = e.target;
 
-    layer.setStyle({
-        weight: 5,
-        color: '#666',
-        dashArray: ''
-    });
+    // layer.setStyle({
+    //     weight: 5,
+    //     color: '#666',
+    //     dashArray: ''
+    // });
     info.update(layer.feature.properties)
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
