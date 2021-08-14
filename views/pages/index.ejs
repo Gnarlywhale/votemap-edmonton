@@ -7,8 +7,8 @@
 <body>
 
   <!-- <%- include ("../partials/nav.ejs") %> -->
-  <button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
-  <button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
+  <button class="tablink" onclick="openPage('Mixed')" id="defaultOpen">Mixed</button>
+  <button class="tablink" onclick="openPage('NDP')" >NDP</button>
   <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
   <button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
   <div id="mixedId"></div>
@@ -77,13 +77,26 @@ info.update = function (props) {
 
 info.addTo(mixedMap);
 
-geojson = L.geoJson.ajax('FullBend.json', {style: style, local: true, onEachFeature: onEachFeature});
+
+
+function openPage(mapType) {
+  mixedMap.clearLayers();
+  switch(mapType){
+    case "Mixed":
+    geojson = L.geoJson.ajax('FullBend.json', {style: style, local: true, onEachFeature: onEachFeature});
 // geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
 geojson.on('data:loaded', function(){
 geojson.addTo(mixedMap);
 });
-
-function openPage(pageName,elmnt,color) {
+      break;
+    case "NDP":
+    geojson = L.geoJson.ajax('FullBendNDP.json', {style: style, local: true, onEachFeature: onEachFeature});
+// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+geojson.on('data:loaded', function(){
+geojson.addTo(mixedMap);
+});
+      break;
+  }
   // var i, tabcontent, tablinks;
   // tabcontent = document.getElementsByClassName("tabcontent");
   // for (i = 0; i < tabcontent.length; i++) {
