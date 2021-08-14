@@ -71,7 +71,7 @@ body, html {
   width:100%;
 }
 
-#Mixed {background-color: gray;}
-#Liberal {background-color: red;}
-#Conservative {background-color: blue;}
-#NDP {background-color: orange;}
+#Mixed {background-color: white;}
+#Liberal {background-color: white;}
+#Conservative {background-color: white;}
+#NDP {background-color: white;}

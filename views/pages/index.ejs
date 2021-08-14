@@ -95,6 +95,11 @@ geojson.on('data:loaded', function(){
 geojson.addTo(mixedMap);
 });
 
+geojson = L.geoJson.ajax('FullBendNDP.json', {style: style, local: true, onEachFeature: onEachFeature});
+// geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
+geojson.on('data:loaded', function(){
+geojson.addTo(ndpMap);
+});
 function openPage(pageName,elmnt,color) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
