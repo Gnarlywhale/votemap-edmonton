@@ -21,7 +21,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiZ25hcmx5d2hhbGUiLCJhIjoiY2tzYmI0Mjd2MDUyaDJvcGF3MmtrZ2swYyJ9.WIUqsJEFYMnbTUv2MiUPdg'
 }).addTo(mymap);
-var geojson 
+var geojson; 
 function style(feature) {
     return {
         fillColor: feature.properties.fill,
@@ -35,8 +35,7 @@ function style(feature) {
 function onEachFeature(feature, layer) {
     layer.on({
         mouseover: highlightFeature,
-        mouseout: resetHighlight,
-        click: zoomToFeature
+        mouseout: resetHighlight
     });
 }
 function highlightFeature(e) {
