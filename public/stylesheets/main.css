@@ -25,7 +25,7 @@ border: 2px solid white; }
 .jumbotron .lang-logo img {
 max-width: 100%; }
 
-#mixedId { height:100vh;
+#mixedId { height:94vh;
 width:100vw}
 
 
@@ -54,4 +54,8 @@ color: #777;
 }
 .tablink:hover {
   background-color: #777;
+}
+.legend {
+  line-height: 18px;
+  color: #555;
 }

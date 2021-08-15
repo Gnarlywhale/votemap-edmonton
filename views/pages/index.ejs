@@ -7,15 +7,15 @@
 <body>
 
   <!-- <%- include ("../partials/nav.ejs") %> -->
-  <button class="tablink" onclick="openPage('Mixed')" id="defaultOpen">Mixed</button>
-  <button class="tablink" onclick="openPage('NDP')" >NDP</button>
-  <button class="tablink" onclick="openPage('Con')">Conservative</button>
-  <button class="tablink" onclick="openPage('Lib')">Liberal</button>
+  <button class="tablink" onclick="openPage('Mixed',this)" id="defaultOpen">Mixed</button>
+  <button class="tablink" onclick="openPage('NDP',this)" >NDP</button>
+  <button class="tablink" onclick="openPage('Con',this)">Conservative</button>
+  <button class="tablink" onclick="openPage('Lib',this)">Liberal</button>
   <div id="mixedId"></div>
 
 </body>
 <script>
-var mixedMap = L.map('mixedId').setView([53.5461, -113.4938], 12);
+var mainMap = L.map('mixedId').setView([53.5461, -113.4938], 12);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -23,7 +23,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     tileSize: 512,
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoiZ25hcmx5d2hhbGUiLCJhIjoiY2tzYmI0Mjd2MDUyaDJvcGF3MmtrZ2swYyJ9.WIUqsJEFYMnbTUv2MiUPdg'
-}).addTo(mixedMap);
+}).addTo(mainMap);
 
 var geojson; 
 function style(feature) {
@@ -62,7 +62,7 @@ function resetHighlight(e) {
 }
 var info = L.control();
 
-info.onAdd = function (mixedMap) {
+info.onAdd = function (mainMap) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
     this.update();
     return this._div;
@@ -75,11 +75,11 @@ info.update = function (props) {
         : 'Hover over a neighbourhood');
 };
 
-info.addTo(mixedMap);
+info.addTo(mainMap);
 mixed = L.geoJson.ajax('FullBend.json', {style: style, local: true, onEachFeature: onEachFeature});
 // geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
 mixed.on('data:loaded', function(){
-  mixed.addTo(mixedMap);
+  mixed.addTo(mainMap);
 });
 
 ndp =  L.geoJson.ajax('FullBendNDP.json', {style: style, local: true, onEachFeature: onEachFeature});
@@ -92,26 +92,31 @@ lib = L.geoJson.ajax('FullBendLib.json', {style: style, local: true, onEachFeatu
 // geojson = new L.GeoJSON.AJAX('FullBendNDP.json', {style: style});
 
 // Should improve to pre-load each json file, then just add to map on click, rather than loading each time.
-function openPage(mapType) {
-  mixedMap.eachLayer(function(layer) {
+function openPage(mapType,elmnt) {
+  mainMap.eachLayer(function(layer) {
   if (!!layer.toGeoJSON) {
-    mixedMap.removeLayer(layer);
+    mainMap.removeLayer(layer);
   }
 });
   switch(mapType){
     case "Mixed":
-    mixed.addTo(mixedMap);
+    mixed.addTo(mainMap);
       break;
     case "NDP":
-    ndp.addTo(mixedMap);
+    ndp.addTo(mainMap);
       break;
       case "Con":
-    con.addTo(mixedMap);
+    con.addTo(mainMap);
       break;
       case "Lib":
-    lib.addTo(mixedMap);
+    lib.addTo(mainMap);
       break;
   }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  elmnt.style.backgroundColor = '#578863';
   // var i, tabcontent, tablinks;
   // tabcontent = document.getElementsByClassName("tabcontent");
   // for (i = 0; i < tabcontent.length; i++) {
@@ -125,7 +130,30 @@ function openPage(mapType) {
   // elmnt.style.backgroundColor = color;
 }
 
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+  var div = L.DomUtil.create('div', 'info legend');
+  div.innerHTML += '<img src="Legend.png" alt="Map color legend" height="200px">';
+  // var div = L.DomUtil.create('div', 'info legend'),
+  //     grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+  //     labels = [];
+
+  // loop through our density intervals and generate a label with a colored square for each interval
+  // for (var i = 0; i < grades.length; i++) {
+     
+
+          // '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+          // grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+  // }
+
+    return div;
+};
+
+legend.addTo(mainMap);
+
 // Get the element with id="defaultOpen" and click on it
+
 document.getElementById("defaultOpen").click();
 </script>
 </html>
